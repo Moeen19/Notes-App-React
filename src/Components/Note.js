@@ -16,7 +16,7 @@ function Note({ note, onClick }) {
             return day < 2 ? `A day ago` : `${Math.floor(day)} days ago`;
         }
     }
-    console.log(date)
+    
     const currentTime = date(note.Edited)
 
     return (

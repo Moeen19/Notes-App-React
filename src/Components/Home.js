@@ -46,8 +46,14 @@ function Home() {
         setSearch(e.target.value)
     };
 
+    const sortNotes = (e) => {
+        setSort(e.target.value)
+        setNotes(sortedNotes(sort))
+        console.log(e.target.value, "asdfjl")
+        console.log(notes)
+    }
 
-    const sortedNotes = useMemo((sort) => {
+    const sortedNotes = (sort) => {
         if (sort === "ByEdited") {
             return notes.sort((a, b) => {
                 if (a.Edited > b.Edited) {
@@ -58,16 +64,28 @@ function Home() {
                     return 0;
                 }
             })
+        } else if (sort === "ByAlpha") {
+            return notes.sort((a, b) => {
+                if (a.title > b.title) {
+                    return -1;
+                } else if (a.title < b.title) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            })
+        } else if (sort === "ByCreated") {
+            return notes.sort((a, b) => {
+                if (a.Created > b.Created) {
+                    return 1;
+                } else if (a.Created < b.Created) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            })
         }
-    });
-
-    const sortNotes = (e) => {
-        console.log(e)
-        setSort(e.target.value)
-        setNotes(sortedNotes);
     }
-
-    console.log(sortNotes)
 
     const handleClickAdd = () => {
         if (title && body) {
@@ -132,16 +150,16 @@ function Home() {
                 <div className="max-w-[1200px] mx-auto pl-[250px] w-full">
                     <div className="py-[10px] max-w-[550px] w-full flex gap-[10px]">
                         <input onChange={handleChangeSearch} className="rounded-[8px] outline-none p-[8px]" type="text" placeholder="Search" />
-                        <select className="cursor-pointer rounded-[8px] p-[8px] outline-none" >
-                            <option onClick={sortNotes} value="ByEdited">By Edited</option>
-                            <option onClick={sortNotes} value="ByAlpha">By Alphabetically</option>
-                            <option onClick={sortNotes} value="ByCreated">By Created</option>
+                        <select onChange={sortNotes} className="cursor-pointer rounded-[8px] p-[8px] outline-none" >
+                            <option value="ByEdited">By Edited</option>
+                            <option value="ByAlpha">By Alphabetically</option>
+                            <option value="ByCreated">By Created</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            {notes.length === 0 && <p className="text-center mt-[20px]">No notes to show</p>}
+            {filteredItems.length === 0 && <p className="text-center mt-[20px]">No notes to show</p>}
 
             {open && <Create btn={btn} handleClickUpdate={handleClickUpdate} handleClickRemove={handleClickRemove} handleClose={handleClick} body={body} title={title} handleClickAdd={handleClickAdd} handleBodyEnter={handleBodyEnter} handleTitleEnter={handleTitleEnter} />}
 
