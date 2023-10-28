@@ -36,24 +36,28 @@ function Home() {
         setBtn(true)
     };
 
-    const filteredItems = useMemo(() => {
+
+    let filteredItems = useMemo(() => { 
         return notes.filter(note => {
             return note.title.toLowerCase().includes(search.toLowerCase())
         })
-    }, [notes, search]);
+    }, [notes, search, sort]);
+
+
 
     const handleChangeSearch = (e) => {
         setSearch(e.target.value)
     };
 
     const sortNotes = (e) => {
-        setSort(e.target.value)
-        setNotes(sortedNotes(sort))
-        console.log(e.target.value, "asdfjl")
-        console.log(notes)
+        let s = e.target.value;
+        setSort(s)
+        let sorted = sortedNotes(s)
+        setNotes(sorted)
     }
 
     const sortedNotes = (sort) => {
+        console.log("sort")
         if (sort === "ByEdited") {
             return notes.sort((a, b) => {
                 if (a.Edited > b.Edited) {
@@ -67,9 +71,9 @@ function Home() {
         } else if (sort === "ByAlpha") {
             return notes.sort((a, b) => {
                 if (a.title > b.title) {
-                    return -1;
-                } else if (a.title < b.title) {
                     return 1;
+                } else if (a.title < b.title) {
+                    return -1;
                 } else {
                     return 0;
                 }
