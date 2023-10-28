@@ -143,7 +143,7 @@ function Home() {
     })
 
     return (
-        <div className="font-sans relative">
+        <div className={`font-sans relative overflow-hidden overflow-x-hidden ${open && 'overflow-y-hidden'}`}>
             <div className="bg-[#43799c] py-[16px]">
                 <div className="max-w-[1200px] w-full mx-auto pl-[250px]">
                     <h1 className="text-[white] font-bold text-[2.25rem] leading-[2.25rem]">Notes App React</h1>
