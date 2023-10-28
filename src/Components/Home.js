@@ -23,7 +23,8 @@ function Home() {
     }, [])
 
     const handleClick = () => {
-        setOpen(!open)
+        setOpen(!open);
+        setBtn(false);
         setTitle('');
         setBody('');
     };
